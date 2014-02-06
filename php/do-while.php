@@ -1,10 +1,10 @@
 <?php
 
-$count = 0;
+$count = 2;
 
 do {
-	echo "$count\n";
-	$count -= 5;
-} while ($count >= -10);
+	echo $count . "\n";
+	$count *= $count;
+} while ($count <= 1000000);
 
 ?>
