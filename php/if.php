@@ -8,9 +8,7 @@ $c = '10';
 if ($a < $b) {
 	// output the appropriate result
 	echo "$a is less than $b\n";
-}
-
-else {
+} else {
 	// output the appropriate result
 	echo "$a is greater than $b\n";
 }
@@ -19,9 +17,7 @@ else {
 if ($b >= $c) {
 	// output the appropriate result
 	echo "$b is greater than or equal to $c\n";
-}
-
-else {
+} else {
 	// output the appropriate result
 	echo "$b is less than or equal to $c\n";
 }
@@ -32,19 +28,13 @@ else {
 if ($b === $c) {
 	// output the appropriate result
 	echo "$b is identical to $c\n";
-}
-
-elseif ($b == $c) {
+} elseif ($b == $c) {
 	// output the appropriate result
 	echo "$b is equal to $c\n";
-}
-
-elseif ($b !== $c) {
+} elseif ($b !== $c) {
 	// output the appropriate result
 	echo "$b is not identical to $c\n";
-}
-
-else {
+} else {
 	// output the appropriate result
 	echo "$b is not equal to $c\n";
 }
