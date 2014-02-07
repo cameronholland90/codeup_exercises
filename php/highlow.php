@@ -7,21 +7,21 @@ $compLow = 1;
 $compHigh = 100;
 
 while(TRUE) {
-	fwrite(STDOUT, "Guess? ");
+	fwrite(STDOUT, "What is your guess? ");
 	$guess = mt_rand($compLow, $compHigh);
 	echo $guess . "\n";
 	if ($guess < $answer) {
-		echo "HIGHER\n";
+		echo "The number is higher then that\n";
 		$compLow = $guess + 1;
 		$count++;
 	} elseif ($guess > $answer) {
-		echo "LOWER\n";
+		echo "The number is lower then that\n";
 		$compHigh = $guess - 1;
 		$count++;
 	} else {
-		echo "GOOD GUESS!\n";
+		echo "Thats it! Great guess!\n";
 		$count++;
-		echo "$count\n";
+		echo "You guessed $count times.\n";
 		exit(0);
 	}
 }
