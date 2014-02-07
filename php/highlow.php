@@ -12,11 +12,11 @@ while(TRUE) {
 	echo $guess . "\n";
 	if ($guess < $answer) {
 		echo "HIGHER\n";
-		$compLow = $guess;
+		$compLow = $guess + 1;
 		$count++;
 	} elseif ($guess > $answer) {
 		echo "LOWER\n";
-		$compHigh = $guess;
+		$compHigh = $guess - 1;
 		$count++;
 	} else {
 		echo "GOOD GUESS!\n";
