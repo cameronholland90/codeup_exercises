@@ -5,11 +5,19 @@ $continue = TRUE;
 $playAgain = '';
 $firstMove = TRUE;
 $move = '';
+
+//location cordinates
 $myX = 0;
 $myY = 0;
-$lastMove = array($myX, $myY);
+
+//saves last move
+$lastMove = array(0,0);
+
+//creates win and lose locations
 $win_cords = array(rand(1,4), rand(1,4));
 $lose_cords = array(rand(1,4), rand(1,4));
+
+//creates display and location boards
 $displayBoard = array(array('.', '.', '.', '.', '.'), 
 					  array('.', '.', '.', '.', '.'), 
 					  array('.', '.', '.', '.', '.'), 
@@ -22,17 +30,22 @@ $locationBoard = array(array('.', '.', '.', '.', '.'),
 					   array('.', '.', '.', '.', '.'), 
 					   array('.', '.', '.', '.', '.'));
 
-
-//set up locations on board
-$locationBoard[$win_cords[0]][$win_cords[1]] = 'w';
-$locationBoard[$lose_cords[0]][$lose_cords[1]] = 'l';
-
-
 //display board / play game
 while($continue) {
+	//sets your last location to a new marker
+	$locationBoard[$lastMove[0]][$lastMove[1]] = 'x';
+	$displayBoard[$lastMove[0]][$lastMove[1]] = 'x';
+
+	//set up locations on board
+	$locationBoard[$win_cords[0]][$win_cords[1]] = 'w';
+	$locationBoard[$lose_cords[0]][$lose_cords[1]] = 'l';
+
 	//sets your location
 	$locationBoard[$myX][$myY] = 'o';
 	$displayBoard[$myX][$myY] = 'o';
+
+	$lastMove = array($myX, $myY);
+
 	//print board
 	for($i = 4; $i >= 0; $i--) {
 		for($j = 0; $j < 5; $j++) {
@@ -63,6 +76,8 @@ while($continue) {
 			echo "You cant move there!\n";
 		}
 
+
+
 		//not users first move
 		$firstMove = FALSE;
 	} else {
@@ -86,6 +101,8 @@ while($continue) {
 		//check if user won, lost or ask next move
 		if($locationBoard[$myX][$myY] === 'w') {
 			echo "You Win!";
+
+			//resets game if user wants to play again
 			fwrite(STDOUT, "Play Again?\n");
 			$playAgain = fgets(STDIN);
 			if($playAgain === "yes\n" || $playAgain === "y\n") {
@@ -102,11 +119,16 @@ while($continue) {
 				$myX = 0;
 				$myY = 0;
 				$firstMove = TRUE;
+				$win_cords = array(rand(1,4), rand(1,4));
+				$lose_cords = array(rand(1,4), rand(1,4));
+				$lastMove = array(0,0);
 			} else {
 				$continue = FALSE;
 			}
 		} elseif ($locationBoard[$myX][$myY] === 'l') {
 			echo "You Lose!";
+
+			//resets game if user wants to play again
 			fwrite(STDOUT, "Play Again?\n");
 			$playAgain = fgets(STDIN);
 			if($playAgain === "yes\n" || $playAgain === "y\n") {
@@ -123,6 +145,9 @@ while($continue) {
 				$myX = 0;
 				$myY = 0;
 				$firstMove = TRUE;
+				$win_cords = array(rand(1,4), rand(1,4));
+				$lose_cords = array(rand(1,4), rand(1,4));
+				$lastMove = array(0,0);	
 			} else {
 				$continue = FALSE;
 			}
@@ -139,9 +164,5 @@ while($continue) {
 	// }
 	// echo "\n" . "\n";
 }
-
-
-
-
 
 ?>

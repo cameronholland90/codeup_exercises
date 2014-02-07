@@ -1,5 +1,12 @@
 <?php
 
+$pos = strpos($argv[0], '.');
+$program = strstr($argv[0], 0, $pos);
+$fileType = substr($argv[0], $pos + 1);
+
+echo "You have run $program!\n";
+echo "It is a $fileType file!\n\n";
+
 if ($argc == 3) {
 	//variables
 	$answer = mt_rand($argv[1], $argv[2]);
