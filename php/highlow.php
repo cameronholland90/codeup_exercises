@@ -1,6 +1,6 @@
 <?php
 
-$answer = rand(1, 100);
+$answer = mt_rand(1, 100);
 $guess = '';
 
 while(TRUE) {
