@@ -3,15 +3,20 @@
 $answer = mt_rand(1, 100);
 $guess = '';
 $count = 0;
+$compLow = 1;
+$compHigh = 100;
 
 while(TRUE) {
 	fwrite(STDOUT, "Guess? ");
-	$guess = fgets(STDIN);
+	$guess = mt_rand($compLow, $compHigh);
+	echo $guess . "\n";
 	if ($guess < $answer) {
 		echo "HIGHER\n";
+		$compLow = $guess;
 		$count++;
 	} elseif ($guess > $answer) {
 		echo "LOWER\n";
+		$compHigh = $guess;
 		$count++;
 	} else {
 		echo "GOOD GUESS!\n";
