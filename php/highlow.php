@@ -36,7 +36,7 @@ if ($argc == 3) {
 		}
 	}
 } else {
-	echo "not enough arguments";
+	echo "Not enough arguments!";
 }
 
 
