@@ -88,7 +88,7 @@ while($continue) {
 			echo "You Win!";
 			fwrite(STDOUT, "Play Again?\n");
 			$playAgain = fgets(STDIN);
-			if($playAgain = "yes" || $playAgain = 'y') {
+			if($playAgain === "yes\n" || $playAgain === "y\n") {
 				$displayBoard = array(array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
@@ -109,7 +109,7 @@ while($continue) {
 			echo "You Lose!";
 			fwrite(STDOUT, "Play Again?\n");
 			$playAgain = fgets(STDIN);
-			if($playAgain === "yes" || $playAgain === 'y') {
+			if($playAgain === "yes\n" || $playAgain === "y\n") {
 				$displayBoard = array(array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
@@ -128,7 +128,7 @@ while($continue) {
 			}
 		} 
 	}
-	echo "\n" . "\n";
+	echo "\n\n";
 
 	//testing purposes(display locations)
 	// for($i = 4; $i >= 0; $i--) {
