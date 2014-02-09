@@ -61,16 +61,16 @@ while($continue) {
 	if($firstMove === TRUE){
 		//ask user for first move
 		fwrite(STDOUT, "First Move?\n");
-		$move = fgets(STDIN);
+		$move = rtrim(fgets(STDIN));
 
 		//do user input move
-		if($move == "a\n" && $myX != 0) {
+		if($move == "a" && $myX != 0) {
 			$myX--;
-		} elseif ($move == "w\n" && $myY != 4) {
+		} elseif ($move == "w" && $myY != 4) {
 			$myY++;
-		} elseif ($move == "s\n" && $myY != 0) {
+		} elseif ($move == "s" && $myY != 0) {
 			$myY--;
-		} elseif ($move == "d\n" && $myX != 4) {
+		} elseif ($move == "d" && $myX != 4) {
 			$myX++;
 		} else {
 			echo "You cant move there!\n";
@@ -83,16 +83,16 @@ while($continue) {
 	} else {
 		//ask user next move
 		fwrite(STDOUT, "Next Move?\n");
-		$move = fgets(STDIN);
+		$move = rtrim(fgets(STDIN));
 
 		//do user input move
-		if($move == "a\n" && $myX != 0) {
+		if($move == "a" && $myX != 0) {
 			$myX--;
-		} elseif ($move == "w\n" && $myY != 4) {
+		} elseif ($move == "w" && $myY != 4) {
 			$myY++;
-		} elseif ($move == "s\n" && $myY != 0) {
+		} elseif ($move == "s" && $myY != 0) {
 			$myY--;
-		} elseif ($move == "d\n" && $myX != 4) {
+		} elseif ($move == "d" && $myX != 4) {
 			$myX++;
 		} else {
 			echo "You cant move there!\n";
@@ -104,8 +104,8 @@ while($continue) {
 
 			//resets game if user wants to play again
 			fwrite(STDOUT, "Play Again?\n");
-			$playAgain = fgets(STDIN);
-			if($playAgain === "yes\n" || $playAgain === "y\n") {
+			$playAgain = rtrim(fgets(STDIN));
+			if($playAgain === "yes" || $playAgain === "y") {
 				$displayBoard = array(array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
@@ -130,8 +130,8 @@ while($continue) {
 
 			//resets game if user wants to play again
 			fwrite(STDOUT, "Play Again?\n");
-			$playAgain = fgets(STDIN);
-			if($playAgain === "yes\n" || $playAgain === "y\n") {
+			$playAgain = rtrim(fgets(STDIN));
+			if($playAgain === "yes" || $playAgain === "y") {
 				$displayBoard = array(array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
