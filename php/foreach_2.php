@@ -29,6 +29,8 @@ if($argc == 2) {
 	$year = 1950;
 }
 
+ksort($books);
+
 foreach ($books as $title => $book) {
 	if ($book['published'] > $year) {
 		echo "{$title}:\n";
