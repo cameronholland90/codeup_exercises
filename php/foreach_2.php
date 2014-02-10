@@ -23,8 +23,14 @@ $books = array(
     )
 );
 
+if($argc == 2) {
+	$year = $argv[1];
+} else {
+	$year = 1950;
+}
+
 foreach ($books as $title => $book) {
-	if ($book['published'] > 1950) {
+	if ($book['published'] > $year) {
 		echo "{$title}:\n";
 		foreach ($book as $info => $value) {
 			echo "{$info} - $value\n";
