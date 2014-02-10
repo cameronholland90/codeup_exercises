@@ -61,7 +61,7 @@ while($continue) {
 	if($firstMove === TRUE){
 		//ask user for first move
 		fwrite(STDOUT, "First Move?\n");
-		$move = rtrim(fgets(STDIN));
+		$move = trim(fgets(STDIN));
 
 		//do user input move
 		if($move == "a" && $myX != 0) {
@@ -83,7 +83,7 @@ while($continue) {
 	} else {
 		//ask user next move
 		fwrite(STDOUT, "Next Move?\n");
-		$move = rtrim(fgets(STDIN));
+		$move = trim(fgets(STDIN));
 
 		//do user input move
 		if($move == "a" && $myX != 0) {
@@ -104,7 +104,7 @@ while($continue) {
 
 			//resets game if user wants to play again
 			fwrite(STDOUT, "Play Again?\n");
-			$playAgain = rtrim(fgets(STDIN));
+			$playAgain = trim(fgets(STDIN));
 			if($playAgain === "yes" || $playAgain === "y") {
 				$displayBoard = array(array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
@@ -130,7 +130,7 @@ while($continue) {
 
 			//resets game if user wants to play again
 			fwrite(STDOUT, "Play Again?\n");
-			$playAgain = rtrim(fgets(STDIN));
+			$playAgain = trim(fgets(STDIN));
 			if($playAgain === "yes" || $playAgain === "y") {
 				$displayBoard = array(array('.', '.', '.', '.', '.'), 
 					  				  array('.', '.', '.', '.', '.'), 
