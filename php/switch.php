@@ -23,12 +23,9 @@ switch($day_of_week) {
     case 5: 
         echo "Today is Friday.";
         break;
-    case 6: 
-        echo "Today is Saturday.";
-        break;
-    case 7: 
-        echo "Today is Sunday.";
-        break;
+    default:
+    	echo "It is the Weekend";
+    	break;
 }
 
 echo "\n";
