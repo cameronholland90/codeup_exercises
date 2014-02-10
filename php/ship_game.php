@@ -37,18 +37,32 @@ $compDisplayBoard = array(array(' ', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 
 // set up location arrays for ships and place ships on user and computer board
 //users
-$battleship = array();
-$submarine = array();
-$destroyer = array();
-$patrolBoat = array();
-$aircraftCarrier = array();
+$ships = array('battleship' => array('', '', '', ''),
+			   'submarine' = array('', '', ''),
+			   'destroyer' = array('', '', ''),
+			   'patrolBoat' = array('', ''),
+			   'aircraftCarrier' = array('', '', '', '', ''));
+
+foreach ($ships as $type => $locations) {
+	fwrite(STDOUT, "What row do you want the $type to start in? Use capital letters");
+	$row = trim(fgets(STDIN));
+	fwrite(STDOUT, "What column do you want the $type to start in? ");
+	$column = trim(fgets(STDIN));
+	fwrite(STDOUT, "What direction would you like it to go? left, right, up or down");
+	$direction = trim(fgets(STDIN));
+
+	for ($i = 0; $i < count($locations); $i++) { 
+		if()
+	}
+}
+
 
 //computers
-$comp_battleship = array();
-$comp_submarine = array();
-$comp_destroyer = array();
-$comp_patrolBoat = array();
-$comp_aircraftCarrier = array();
+$comp_battleship = array('', '', '', '');
+$comp_submarine = array('', '', '');
+$comp_destroyer = array('', '', '');
+$comp_patrolBoat = array('', '');
+$comp_aircraftCarrier = array('', '', '', '', '');
 
 echo "\t\t\t\tBATTLESHIP\n\n";
 echo "B = battleship, S = Sub, D = Destroyer, P = Patrol boat, A = Aircraft Carrier\n\t\t\tX = hit and 0 = miss\n\n";
