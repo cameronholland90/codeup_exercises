@@ -16,7 +16,7 @@ do {
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
-    $input = trim(fgets(STDIN));
+    $input = strtoupper(trim(fgets(STDIN)));
 
     // Check for actionable input
     if ($input == 'N') {
