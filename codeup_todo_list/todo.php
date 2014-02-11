@@ -2,13 +2,17 @@
 
 // Create array to hold list of todo items
 $items = array();
+$count = 1;
 
 // The loop!
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
         // Display each item and a newline
-        echo "[{$key}] {$item}\n";
+        //var_dump($key);
+        $key2 = $key + 1;
+        echo "[" . $key2 . "] {$item}\n";
+        //var_dump($key);
     }
 
     // Show the menu options
@@ -17,7 +21,7 @@ do {
     // Get the input from user
     // Use trim() to remove whitespace and newlines
     $input = strtoupper(trim(fgets(STDIN)));
-
+    
     // Check for actionable input
     if ($input == 'N') {
         // Ask for entry
