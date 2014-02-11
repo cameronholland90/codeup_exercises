@@ -1,18 +1,36 @@
 <?php
 
+function error($operator, $num = 1) {
+	if($operator === '/') {
+		if ($num == 0) {
+			return "You tried to divide by 0. Skipped this argument. \n";
+		}
+		return ;
+	} elseif ($operator === '%') {
+		if ($num == 0) {
+			return "You tried to modulus by 0. Skipped this argument. \n";
+		}
+		return ;
+	} elseif ($operator === '2') {
+		return "ERROR: Only works with 2 arguments.\n";
+	}else {
+		return "ERROR: All arguments must be numbers. You passed " . $num . "\n";
+	}
+}
+
 function modulus() {
 	$numArgs = func_num_args();
 	$numList = func_get_args();
 	$modulus = 0;
 	for ($i = 0; $i < $numArgs; $i++) { 
-		if ($numArgs > 2) {
-			return "ERROR: Only works with 2 arguments.\n";
+		if ($numArgs < 2) {
+			return error('2');
 		}
 		if (is_numeric($numList[$i]) != TRUE) {
-	        return "ERROR: All arguments must be numbers. You passed " . $numList[$i] . "\n";
+	        return error('', $numList[$i]);
 	    }
 	    if ($numList[$i] == 0) {
-	    	echo "You tried to modulus by 0. Skipped this argument. \n";
+	    	echo error('%', $numList[$i]);
 	    	continue;
 	    }
 		if ($i == 0) {
@@ -30,7 +48,7 @@ function add() {
 	$add = 0;
 	for ($i = 0; $i < $numArgs; $i++) { 
 		if (is_numeric($numList[$i]) != TRUE) {
-	        return "ERROR: All arguments must be numbers. You passed " . $numList[$i] . "\n";
+	        return error('', $numList[$i]);
 	    }
 		if ($i == 0) {
 			$add = $numList[$i];
@@ -47,7 +65,7 @@ function subtract() {
 	$subtract = 0;
 	for ($i = 0; $i < $numArgs; $i++) {
 		if (is_numeric($numList[$i]) != TRUE) {
-	        return "ERROR: All arguments must be numbers. You passed " . $numList[$i] . "\n";
+	        return error('', $numList[$i]);
 	    }
 		if ($i == 0) {
 			$subtract = $numList[$i];
@@ -64,7 +82,7 @@ function mulitply() {
 	$mulitply = 0;
 	for ($i = 0; $i < $numArgs; $i++) {
 		if (is_numeric($numList[$i]) != TRUE) {
-	        return "ERROR: All arguments must be numbers. You passed " . $numList[$i] . "\n";
+	        return error('', $numList[$i]);
 	    }
 		if ($i == 0) {
 			$mulitply = $numList[$i];
@@ -81,10 +99,10 @@ function divide() {
 	$divide = 0;
 	for ($i = 0; $i < $numArgs; $i++) { 
 		if (is_numeric($numList[$i]) != TRUE) {
-	        return "ERROR: All arguments must be numbers. You passed " . $numList[$i] . "\n";
+	        return error('', $numList[$i]);
 	    }
 	    if ($numList[$i] == 0) {
-	    	echo "You tried to divide by 0. Skipped this argument. \n";
+	    	echo error('/', $numList[$i]);;
 	    	continue;
 	    }
 		if ($i == 0) {
