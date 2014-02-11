@@ -9,6 +9,9 @@ function add() {
 	$numList = func_get_args();
 	$add = 0;
 	for ($i = 0; $i < $numArgs; $i++) { 
+		if (is_numeric($numList[$i]) != TRUE) {
+	        return "ERROR: All arguments must be numbers\n";
+	    }
 		if ($i == 0) {
 			$add = $numList[$i];
 		} else {
@@ -22,7 +25,10 @@ function subtract() {
 	$numArgs = func_num_args();
 	$numList = func_get_args();
 	$subtract = 0;
-	for ($i = 0; $i < $numArgs; $i++) { 
+	for ($i = 0; $i < $numArgs; $i++) {
+		if (is_numeric($numList[$i]) != TRUE) {
+	        return "ERROR: All arguments must be numbers\n";
+	    }
 		if ($i == 0) {
 			$subtract = $numList[$i];
 		} else {
@@ -36,7 +42,10 @@ function mulitply() {
 	$numArgs = func_num_args();
 	$numList = func_get_args();
 	$mulitply = 0;
-	for ($i = 0; $i < $numArgs; $i++) { 
+	for ($i = 0; $i < $numArgs; $i++) {
+		if (is_numeric($numList[$i]) != TRUE) {
+	        return "ERROR: All arguments must be numbers\n";
+	    }
 		if ($i == 0) {
 			$mulitply = $numList[$i];
 		} else {
@@ -51,6 +60,9 @@ function divide() {
 	$numList = func_get_args();
 	$divide = 0;
 	for ($i = 0; $i < $numArgs; $i++) { 
+		if (is_numeric($numList[$i]) != TRUE) {
+	        return "ERROR: All arguments must be numbers\n";
+	    }
 		if ($i == 0) {
 			$divide = $numList[$i];
 		} else {
@@ -68,7 +80,7 @@ $second = 2;
 // echo multiply($first, $second);
 // echo divide($first, $second);
 // echo modulus($first, $second);
-echo add($first, $second, 13, 10, 8);
+echo add($first, $second, 13, 'hi', 8);
 echo subtract($first, $second, 13, 10, 8);
 echo mulitply($first, $second, 13, 10, 8);
 echo divide($first, $second, 13, 10, 8);
