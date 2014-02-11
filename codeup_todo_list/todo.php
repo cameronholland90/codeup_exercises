@@ -35,6 +35,7 @@ do {
         // Remove from array
         $key2 = $key - 1;
         unset($items[$key2]);
+        $items = array_values($items);
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
