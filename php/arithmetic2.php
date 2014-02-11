@@ -1,26 +1,10 @@
 <?php
 
-function add($a, $b) {
-    return ($a + $b) . "\n";
-}
-
-function subtract($a, $b) {
-    return ($a - $b) . "\n";
-}
-
-function multiply($a, $b) {
-    return ($a * $b) . "\n";
-}
-
-function divide($a, $b) {
-    return ($a / $b) . "\n";
-}
-
 function modulus($a, $b) {
     return ($a % $b) . "\n";
 }
 
-function add2() {
+function add() {
 	$numArgs = func_num_args();
 	$numList = func_get_args();
 	$add = 0;
@@ -34,7 +18,7 @@ function add2() {
 	return $add . "\n";
 }
 
-function subtract2() {
+function subtract() {
 	$numArgs = func_num_args();
 	$numList = func_get_args();
 	$subtract = 0;
@@ -48,7 +32,7 @@ function subtract2() {
 	return $subtract . "\n";
 }
 
-function mulitply2() {
+function mulitply() {
 	$numArgs = func_num_args();
 	$numList = func_get_args();
 	$mulitply = 0;
@@ -62,7 +46,7 @@ function mulitply2() {
 	return $mulitply . "\n";
 }
 
-function divide2() {
+function divide() {
 	$numArgs = func_num_args();
 	$numList = func_get_args();
 	$divide = 0;
@@ -84,9 +68,9 @@ $second = 2;
 // echo multiply($first, $second);
 // echo divide($first, $second);
 // echo modulus($first, $second);
-echo add2($first, $second, 13, 10, 8);
-echo subtract2($first, $second, 13, 10, 8);
-echo mulitply2($first, $second, 13, 10, 8);
-echo divide2($first, $second, 13, 10, 8);
+echo add($first, $second, 13, 10, 8);
+echo subtract($first, $second, 13, 10, 8);
+echo mulitply($first, $second, 13, 10, 8);
+echo divide($first, $second, 13, 10, 8);
 
 ?>
