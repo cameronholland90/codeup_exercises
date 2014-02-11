@@ -4,11 +4,11 @@
 function error($operator, $num = 1) {
 	if($operator === '/' && $num == 0) {
 		// error for dividing by 0
-		return "You tried to divide by 0. Skipped this argument. \n";
+		return "You tried to divide by 0.\n";
 
 	} elseif ($operator === '%' && $num == 0) {
 		// error for modulating by 0
-		return "You tried to modulus by 0. Skipped this argument. \n";
+		return "You tried to modululate by 0.\n";
 
 	} elseif ($operator === '2') {
 		// error for using more then 2 arguments in functions that only allow 2
@@ -30,12 +30,12 @@ function modulus() {
 		if ($numArgs < 2 || $numArgs > 2) {
 			return error('2');		// returns error if 2 arguments are not passed to the function
 		}
+		if ($numList[$i] == 0) {
+	    	echo error('%', $numList[$i]);		// prints message if 0 is passed as an arguement
+	    	return FALSE;
+	    }
 		if (is_numeric($numList[$i]) != TRUE) {
 	        return error('', $numList[$i]);		// returns error if an argument is not numeric
-	    }
-	    if ($numList[$i] == 0) {
-	    	echo error('%', $numList[$i]);		// prints message if 0 is passed as an arguement
-	    	continue;
 	    }
 		if ($i == 0) {
 			$modulus = $numList[$i];		// makes $modulus equal the first argument passed
@@ -111,7 +111,7 @@ function divide() {
 	    }
 	    if ($numList[$i] == 0) {
 	    	echo error('/', $numList[$i]);;		// prints message if 0 is passed as an arguement
-	    	continue;
+	    	return FALSE;
 	    }
 		if ($i == 0) {
 			$divide = $numList[$i];		// makes $divide equal the first argument passed
@@ -124,6 +124,8 @@ function divide() {
 
 $first = 10;
 $second = 2;
+
+
 
 // calls functions and echos what it returns
 echo modulus($first, $second);
