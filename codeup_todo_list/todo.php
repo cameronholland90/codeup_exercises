@@ -33,7 +33,8 @@ do {
         // Get array key
         $key = trim(fgets(STDIN));
         // Remove from array
-        unset($items[$key]);
+        $key2 = $key - 1;
+        unset($items[$key2]);
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
