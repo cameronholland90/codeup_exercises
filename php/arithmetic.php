@@ -16,6 +16,10 @@ function divide($a, $b) {
     echo ($a / $b) . "\n";
 }
 
+function modulus($a, $b) {
+    echo ($a % $b) . "\n";
+}
+
 $first = 10;
 $second = 2;
 
@@ -23,5 +27,6 @@ add($first, $second);
 subtract($first, $second);
 multiply($first, $second);
 divide($first, $second);
+modulus($first, $second);
 
 ?>
