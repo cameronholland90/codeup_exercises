@@ -13,11 +13,12 @@ function modulus() {
 	    }
 	    if ($numList[$i] == 0) {
 	    	echo "You tried to modulus by 0. Skipped this argument. \n";
+	    	continue;
 	    }
 		if ($i == 0) {
 			$modulus = $numList[$i];
 		} else {
-			$modulus /= $numList[$i];
+			$modulus %= $numList[$i];
 		}
 	}
 	return $modulus . "\n";
@@ -84,6 +85,7 @@ function divide() {
 	    }
 	    if ($numList[$i] == 0) {
 	    	echo "You tried to divide by 0. Skipped this argument. \n";
+	    	continue;
 	    }
 		if ($i == 0) {
 			$divide = $numList[$i];
