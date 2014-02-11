@@ -125,7 +125,7 @@ function divide() {
 $first = 10;
 $second = 2;
 
-
+// calls functions and echos what it returns
 echo modulus($first, $second);
 echo add($first, $second, 13, 10, 8);
 echo subtract($first, $second, 13, 10, 8);
