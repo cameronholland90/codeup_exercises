@@ -6,7 +6,6 @@ $array = array(1,2,3);
 
 // Create a funciton that checks if a variable is set or empty, and display "$variable_name is SET|EMPTY"
 function emptyOrSet($var) {
-	unset($nothing);
 	if (isset($var) && empty($var)) {
 		return 'SET and EMPTY';
 	}elseif (isset($var)) {
