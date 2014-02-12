@@ -22,7 +22,7 @@ function list_items($list)
 function get_input($upper = FALSE) 
 {
     $userInput = trim(fgets(STDIN));
-    if (ctype_lower($userInput) && $upper === TRUE) {
+    if ($upper === TRUE) {
         return strtoupper($userInput);
     } else {
         return $userInput;
