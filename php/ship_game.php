@@ -7,10 +7,29 @@ function newLocation($list, $newHit) {
 	foreach ($list as $location) {
 		if($newHit === $location) {
 			return FALSE;
-		} else {
-			return TRUE;
-		}
+		} 
 	}
+	return TRUE;
+}
+
+function allShipsSunk($list) {
+	foreach ($list as $type => $ship) {
+	 	foreach ($ship as $key => $location) {
+	 		if ($location !== 'X') {
+	 			return FALSE;
+	 		}
+	 	}
+	}
+	return TRUE;
+}
+
+function markShip($list, $hit) {
+ 	foreach ($list as $key => $location) {
+ 		if ($location === $hit) {
+ 			return $key;
+ 		}
+ 	}
+	return FALSE;
 }
 
 // loop for game
@@ -89,7 +108,7 @@ while(TRUE) {
 			//asks user row, column and direction(randomizes if nothing is entered, wrong value entered)
 			fwrite(STDOUT, "What row do you want the $type to start in? rows = letters ");
 			$row = ord(strtoupper(trim(fgets(STDIN))));
-			if ($row < 65 || $row > 75 || is_numeric($row) == FALSE) {
+			if (($row < 65 || $row > 75) || (is_numeric($row) === FALSE)) {
 				$row = mt_rand(ord('A'), ord('J'));
 			}
 			fwrite(STDOUT, "What column do you want the $type to start in? ");
@@ -252,6 +271,7 @@ while(TRUE) {
 					$compDisplayBoard[$hitRow][$hitColumn] = 'X';
 					$compBoard[$hitRow][$hitColumn] = 'X';
 					$myTurn = FALSE;
+					$comp_ships[$type][markShip($ships[$type], $coord)] = 'X';
 				} else {
 					$compDisplayBoard[$hitRow][$hitColumn] = 'O';
 					$compBoard[$hitRow][$hitColumn] = 'O';
@@ -263,29 +283,34 @@ while(TRUE) {
 			$prevHits[] = $hitRow . $hitColumn;
 		}
 
-		$compTurn = TRUE;
-		while($compTurn) {
-			// computer picks random location to attack(need to fix issue with picking same location more then once)
-			$hitRow = chr(mt_rand(ord('A'), ord('J')));
-			$hitColumn = mt_rand(1, 10);
-			$coord = $hitRow . $hitColumn;
-			if (newLocation($compPrevHits, $coord)) {
-				if ($myBoard[$hitRow][$hitColumn] != '.') {
-					$myBoard[$hitRow][$hitColumn] = 'X';
-					$compTurn = FALSE;
-				} else {
-					$myBoard[$hitRow][$hitColumn] = 'O';
-					$compTurn = FALSE;
-				}			
+		$attacking = !allShipsSunk($comp_ships);
+		if ($attacking === FALSE) {
+			echo "You have won! Congratulations!";
+		} else {
+			$compTurn = TRUE;
+			while($compTurn) {
+				// computer picks random location to attack(need to fix issue with picking same location more then once)
+				$hitRow = chr(mt_rand(ord('A'), ord('J')));
+				$hitColumn = mt_rand(1, 10);
+				$coord = $hitRow . $hitColumn;
+				if (newLocation($compPrevHits, $coord)) {
+					if ($myBoard[$hitRow][$hitColumn] != '.') {
+						$myBoard[$hitRow][$hitColumn] = 'X';
+						$compTurn = FALSE;
+						$ships[$type][markShip($ships[$type], $coord)] = 'X';
+					} else {
+						$myBoard[$hitRow][$hitColumn] = 'O';
+						$compTurn = FALSE;
+					}			
+				}
+				$compPrevHits[] = $hitRow . $hitColumn;
+			} 
+
+			$attacking = !allShipsSunk($ships);
+			if ($attacking === FALSE) {
+				echo "Computer has won! You lose!";
 			}
-			$compPrevHits[] = $hitRow . $hitColumn;
-		} 
-
-
-		// if ($count != 0) {
-		// 	break;
-		// }
-		// $count++;
+		}
 	}
 
 	// randomize computers coords to attack/refresh screen
