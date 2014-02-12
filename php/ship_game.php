@@ -39,6 +39,18 @@ while(TRUE) {
 		$prevHits = array(' ');
 		$compPrevHits = array(' ');
 
+		$comp_ships = array('B' => array('', '', '', ''),
+						   'S' => array('', '', ''),
+						   'D' => array('', '', ''),
+						   'P' => array('', ''),
+						   'A' => array('', '', '', '', ''));
+
+		$ships = array('B' => array('', '', '', ''),
+					   'S' => array('', '', ''),
+					   'D' => array('', '', ''),
+					   'P' => array('', ''),
+					   'A' => array('', '', '', '', ''));
+
 		// displays empty board for players reference during setup
 		$myBoard = array(array(' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
 						 'A' => array('A', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'), 
@@ -98,11 +110,7 @@ while(TRUE) {
 
 		// set up location arrays for ships and place ships on user and computer board
 		//users
-		$ships = array('B' => array('', '', '', ''),
-					   'S' => array('', '', ''),
-					   'D' => array('', '', ''),
-					   'P' => array('', ''),
-					   'A' => array('', '', '', '', ''));
+		
 
 		foreach ($ships as $type => $locations) {
 			//asks user row, column and direction(randomizes if nothing is entered, wrong value entered)
@@ -168,11 +176,7 @@ while(TRUE) {
 		}
 
 		// computer's
-		$comp_ships = array('B' => array('', '', '', ''),
-						   'S' => array('', '', ''),
-						   'D' => array('', '', ''),
-						   'P' => array('', ''),
-						   'A' => array('', '', '', '', ''));
+		
 
 		// randomly place computer pieces
 		$comp_setup = TRUE;
