@@ -12,7 +12,7 @@ function list_items($list)
     foreach ($list as $key => $item) {
         // Display each item and a newline
         $key += 1;
-        $output = $output . "[" . $key . "] {$item}\n";
+        $output .= "[{$key}] {$item}\n";
     }
 
     return $output;
