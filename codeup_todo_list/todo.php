@@ -11,7 +11,7 @@ function list_items($list)
     foreach ($list as $key => $item) {
         // Display each item and a newline
         $key2 = $key + 1;
-        $output = $output . "[" . $key2 . "] item $key2 - {$item}\n";
+        $output = $output . "[" . $key2 . "] {$item}\n";
     }
 
     return $output;
