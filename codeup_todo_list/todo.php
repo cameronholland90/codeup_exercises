@@ -38,7 +38,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit, (C)ompleted List : ';
+    echo '(N)ew item, (R)emove item, (Q)uit, (C)ompleted List, (S)ort : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -52,8 +52,8 @@ do {
         $items[] = get_input();
     } elseif ($input == 'R') {
         echo '(C)omplete, (D)elete, (B)ack : ';
-        $input = get_input(TRUE);
-        if ($input == 'D') {
+        $input2 = get_input(TRUE);
+        if ($input2 == 'D') {
             // delete which item?
             echo 'Enter item number to delete: ';
             // Get array key
@@ -62,7 +62,7 @@ do {
             $key -= 1;
             unset($items[$key]);
             $items = array_values($items);
-        } elseif ($input == 'C') {
+        } elseif ($input2 == 'C') {
             // complete which item?
             echo 'Enter item number to complete: ';
             // Get array key
@@ -77,6 +77,30 @@ do {
     } elseif ($input == 'C') {
         // display completed list
         echo list_items($completeItems) . "\n\n";
+    } elseif ($input == 'S') {
+        echo "(A)-Z, (Z)-A ";
+        $input2 = get_input(TRUE);
+        if($input2 == 'A') {
+            echo '(T)odo List, (C)ompleted List: ';
+            $input3 = get_input(TRUE);
+            if ($input3 == 'T') {
+                sort($items);
+                $items = array_values($items);
+            } elseif ($input3 == 'C') {
+                sort($completeItems);
+                $completeItems = array_values($completeItems);
+            }
+        } elseif ($input2 == 'Z') {
+            echo '(T)odo List, (C)ompleted List: ';
+            $input3 = get_input(TRUE);
+            if ($input3 == 'T') {
+                rsort($items);
+                $items = array_values($items);
+            } elseif ($input3 == 'C') {
+                rsort($completeItems);
+                $completeItems = array_values($completeItems);
+            }
+        }
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
