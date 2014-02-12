@@ -32,6 +32,8 @@ function markShip($list, $hit) {
 	return FALSE;
 }
 
+// make function to check spaces for another ship
+
 // loop for game
 while(TRUE) {
 	if ($newGame) {
