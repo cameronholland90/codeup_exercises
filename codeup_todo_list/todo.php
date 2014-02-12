@@ -55,8 +55,8 @@ do {
         // Get array key
         $key = get_input();
         // Remove from array
-        $key2 = $key - 1;
-        unset($items[$key2]);
+        $key -= 1;
+        unset($items[$key]);
         $items = array_values($items);
     }
 // Exit when input is (Q)uit
