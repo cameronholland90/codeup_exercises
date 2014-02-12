@@ -6,11 +6,9 @@ function isInArray($array, $value) {
 
 function compare($array1, $array2) {
 	$count = 0;
-	foreach ($array1 as $key1 => $value1) {
-		foreach ($array2 as $key2 => $value2) {
-			if ($value1 === $value2) {
-				$count++;
-			}
+	foreach ($array1 as $key => $value) {
+		if(is_numeric(array_search($value, $array2))) {
+			$count++;
 		}
 	}
 	return $count;
@@ -25,4 +23,5 @@ var_dump(isInArray($names, 'Tina'));
 var_dump(isInArray($names, 'Bob'));
 
 echo compare($names, $compare) . PHP_EOL;
+
 ?>
