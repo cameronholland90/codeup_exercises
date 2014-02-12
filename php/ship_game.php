@@ -266,6 +266,14 @@ while(TRUE) {
 			fwrite(STDOUT, "What column is your taget location? ");
 			$hitColumn = trim(fgets(STDIN));
 			$coord = $hitRow . $hitColumn;
+			if (!array_key_exists($hitRow, $compBoard)) {
+				echo "That row doesn't exist.\n";
+				continue;
+			}
+			if ($hitColumn < 1 || $hitColumn > 10) {
+				echo "That column doesn't exist\n";
+				continue;
+			}
 			if (newLocation($prevHits, $coord)) {
 				if ($compBoard[$hitRow][$hitColumn] != '.') {
 					$compDisplayBoard[$hitRow][$hitColumn] = 'X';
