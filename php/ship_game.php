@@ -280,10 +280,12 @@ while(TRUE) {
 			}
 			if (newLocation($prevHits, $coord)) {
 				if ($compBoard[$hitRow][$hitColumn] != '.') {
+					$placeValue = $compBoard[$hitRow][$hitColumn];
 					$compDisplayBoard[$hitRow][$hitColumn] = 'X';
 					$compBoard[$hitRow][$hitColumn] = 'X';
 					$myTurn = FALSE;
-					$comp_ships[$type][markShip($ships[$type], $coord)] = 'X';
+					$shipHit = markShip($comp_ships[$placeValue], $coord);
+					$comp_ships[$placeValue][$shipHit] = 'X';
 				} else {
 					$compDisplayBoard[$hitRow][$hitColumn] = 'O';
 					$compBoard[$hitRow][$hitColumn] = 'O';
@@ -307,9 +309,11 @@ while(TRUE) {
 				$coord = $hitRow . $hitColumn;
 				if (newLocation($compPrevHits, $coord)) {
 					if ($myBoard[$hitRow][$hitColumn] != '.') {
+						$placeValue = $myBoard[$hitRow][$hitColumn];
 						$myBoard[$hitRow][$hitColumn] = 'X';
 						$compTurn = FALSE;
-						$ships[$type][markShip($ships[$type], $coord)] = 'X';
+						$shipHit = markShip($ships[$placeValue], $coord);
+						$ships[$placeValue][$shipHit] = 'X';
 					} else {
 						$myBoard[$hitRow][$hitColumn] = 'O';
 						$compTurn = FALSE;
