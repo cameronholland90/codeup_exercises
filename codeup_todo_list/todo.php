@@ -10,8 +10,8 @@ function list_items($list)
     // Iterate through list items
     foreach ($list as $key => $item) {
         // Display each item and a newline
-        $key2 = $key + 1;
-        $output = $output . "[" . $key2 . "] {$item}\n";
+        $key += 1;
+        $output = $output . "[" . $key . "] {$item}\n";
     }
 
     return $output;
