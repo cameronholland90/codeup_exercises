@@ -2,6 +2,7 @@
 
 // Create array to hold list of todo items
 $items = array();
+$completeItems = array();
 
 // List array items formatted for CLI
 function list_items($list)
@@ -37,7 +38,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (Q)uit, (C)ompleted List : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -50,14 +51,32 @@ do {
         // Add entry to list array
         $items[] = get_input();
     } elseif ($input == 'R') {
-        // Remove which item?
-        echo 'Enter item number to remove: ';
-        // Get array key
-        $key = get_input();
-        // Remove from array
-        $key -= 1;
-        unset($items[$key]);
-        $items = array_values($items);
+        echo '(C)omplete, (D)elete, (B)ack : ';
+        $input = get_input(TRUE);
+        if ($input == 'D') {
+            // delete which item?
+            echo 'Enter item number to delete: ';
+            // Get array key
+            $key = get_input();
+            // Remove from array
+            $key -= 1;
+            unset($items[$key]);
+            $items = array_values($items);
+        } elseif ($input == 'C') {
+            // complete which item?
+            echo 'Enter item number to complete: ';
+            // Get array key
+            $key = get_input();
+            $key -= 1;
+            // add to complete array
+            $completeItems[] = $items[$key];
+            // Remove from array
+            unset($items[$key]);
+            $items = array_values($items);
+        }
+    } elseif ($input == 'C') {
+        // display completed list
+        echo list_items($completeItems) . "\n\n";
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
