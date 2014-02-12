@@ -1,10 +1,25 @@
 <?php
 
 $newGame = TRUE;
+//$count = 0;
+
+function newLocation($list, $newHit) {
+	foreach ($list as $location) {
+		if($newHit === $location) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+}
 
 // loop for game
 while(TRUE) {
-	if ($newGame == TRUE) {
+	if ($newGame) {
+		// stores previous turns for comp and user
+		$prevHits = array(' ');
+		$compPrevHits = array(' ');
+
 		// displays empty board for players reference during setup
 		$myBoard = array(array(' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'),
 						 'A' => array('A', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'), 
@@ -84,22 +99,24 @@ while(TRUE) {
 			}
 			fwrite(STDOUT, "What direction would you like it to go? 1 = left, 2 = right, 3 = up or 4 = down ");
 			$direction = trim(fgets(STDIN));
-			if (($direction < 1 || $direction > 4) || ($direction !== 'left' || $direction !== 'right') || ($direction !== 'up' || $direction !== 'down')) {
+			if (($direction != 1 && $direction != 2) && ($direction != 3 && $direction != 4) && ($direction != 'left' && $direction != 'right') && ($direction != 'up' && $direction != 'down')) {
 				$direction = mt_rand(1, 4);
 			}
 
 			// checks if ship will go outside of board, opposite direction if it will
-			if (($direction === 'up' || $direction === 3) && ($row < (65 + count($locations)))) {
+			if (($direction === 'up' || $direction == 3) && ($row < (65 + count($locations)))) {
 				$direction = 4;
-			} elseif (($direction === 'down' || $direction === 4) && ($row > (65 + count($locations)))) {
+			} elseif (($direction === 'down' || $direction == 4) && ($row > (65 + count($locations)))) {
 				$direction = 3;
 			}
 
-			if (($direction === 'left' || $direction === 1) && ($column <  count($locations))) {
+			if (($direction === 'left' || $direction == 1) && ($column <  count($locations))) {
 				$direction = 2;
-			} elseif (($direction === 'right' || $direction === 2) && ($column > count($locations))) {
+			} elseif (($direction === 'right' || $direction == 2) && ($column > count($locations))) {
 				$direction = 1;
 			}
+
+			
 
 			foreach ($locations as $key => $location) {
 				switch ($direction) {
@@ -153,11 +170,13 @@ while(TRUE) {
 				$direction--;
 			}
 
-			if ($direction == 1 && ($column <=  count($locations))) {
+			if ($direction == 1 && ($column <  count($locations))) {
 				$direction++;
-			} elseif ($direction == 2 && ($column >= count($locations))) {
+			} elseif ($direction == 2 && ($column > count($locations))) {
 				$direction--;
 			}
+
+			
 
 			// places computer's ships on board
 			foreach ($locations as $key => $location) {
@@ -165,25 +184,25 @@ while(TRUE) {
 					case 1:
 					case 'left':
 						$comp_ships[$type][$key] = "" . chr($row) . $column . "";	
-						$compDisplayBoard[chr($row)][$column] = $type;
+						$compBoard[chr($row)][$column] = $type;
 						$column--;
 						break;
 					case 2:
 					case 'right':
 						$comp_ships[$type][$key] = "" . chr($row) . $column . "";
-						$compDisplayBoard[chr($row)][$column] = $type;
+						$compBoard[chr($row)][$column] = $type;
 						$column++;
 						break;
 					case 3:
 					case 'up':
 						$comp_ships[$type][$key] = "" . chr($row) . $column . "";
-						$compDisplayBoard[chr($row)][$column] = $type;
+						$compBoard[chr($row)][$column] = $type;
 						$row--;
 						break;
 					case 4:
 					case 'down':
 						$comp_ships[$type][$key] = "" . chr($row) . $column . "";
-						$compDisplayBoard[chr($row)][$column] = $type;
+						$compBoard[chr($row)][$column] = $type;
 						$row++;
 						break;
 				}
@@ -220,7 +239,53 @@ while(TRUE) {
 			}
 			echo "\n";
 		}
-		break;
+
+		$myTurn = TRUE;
+		while($myTurn) {
+			fwrite(STDOUT, "What row is your taget location? ");
+			$hitRow = strtoupper(trim(fgets(STDIN)));
+			fwrite(STDOUT, "What column is your taget location? ");
+			$hitColumn = trim(fgets(STDIN));
+			$coord = $hitRow . $hitColumn;
+			if (newLocation($prevHits, $coord)) {
+				if ($compBoard[$hitRow][$hitColumn] != '.') {
+					$compDisplayBoard[$hitRow][$hitColumn] = 'X';
+					$compBoard[$hitRow][$hitColumn] = 'X';
+					$myTurn = FALSE;
+				} else {
+					$compDisplayBoard[$hitRow][$hitColumn] = 'O';
+					$compBoard[$hitRow][$hitColumn] = 'O';
+					$myTurn = FALSE;
+				}
+			} else {
+				echo "You have already shot there. Try again.\n";
+			}
+			$prevHits[] = $hitRow . $hitColumn;
+		}
+
+		$compTurn = TRUE;
+		while($compTurn) {
+			// computer picks random location to attack(need to fix issue with picking same location more then once)
+			$hitRow = chr(mt_rand(ord('A'), ord('J')));
+			$hitColumn = mt_rand(1, 10);
+			$coord = $hitRow . $hitColumn;
+			if (newLocation($compPrevHits, $coord)) {
+				if ($myBoard[$hitRow][$hitColumn] != '.') {
+					$myBoard[$hitRow][$hitColumn] = 'X';
+					$compTurn = FALSE;
+				} else {
+					$myBoard[$hitRow][$hitColumn] = 'O';
+					$compTurn = FALSE;
+				}			
+			}
+			$compPrevHits[] = $hitRow . $hitColumn;
+		} 
+
+
+		// if ($count != 0) {
+		// 	break;
+		// }
+		// $count++;
 	}
 
 	// randomize computers coords to attack/refresh screen
