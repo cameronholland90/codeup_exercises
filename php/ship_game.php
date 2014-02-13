@@ -37,10 +37,13 @@ function willCollide($locations, $board) {
 	foreach ($locations as $coord) {
 		$row = substr($coord, 0, 1);
 		$column = substr($coord, 1);
+		echo $row . $column;
 		if ($board[$row][$column] !== '.') {
 			return TRUE;
+			echo $row . $column;
 		}
 	}
+	exit(0);
 	return FALSE;
 }
 
@@ -124,7 +127,9 @@ while(TRUE) {
 		//users
 		
 
-		foreach ($ships as $type => $locations) {
+	foreach ($ships as $type => $locations) {
+		do{
+			$repeat = TRUE;
 			//asks user row, column and direction(randomizes if nothing is entered, wrong value entered)
 			fwrite(STDOUT, "What row do you want the $type to start in? rows = letters ");
 			$row = ord(strtoupper(trim(fgets(STDIN))));
@@ -155,37 +160,65 @@ while(TRUE) {
 				$direction = 1;
 			}
 
-			
+			$column2 = $column;
+			$row2 = $row;
+			foreach ($locations as $key => $location) {
+				switch ($direction) {
+					case 1:
+					case 'left':
+						$ships[$type][$key] = "" . chr($row2) . $column2 . "";	
+						$column2--;
+						break;
+					case 2:
+					case 'right':
+						$ships[$type][$key] = "" . chr($row2) . $column2 . "";
+						$column2++;
+						break;
+					case 3:
+					case 'up':
+						$ships[$type][$key] = "" . chr($row2) . $column2 . "";
+						$row2--;
+						break;
+					case 4:
+					case 'down':
+						$ships[$type][$key] = "" . chr($row2) . $column2 . "";
+						$row2++;
+						break;
+				}
+			}
+
+			if (willCollide($locations, $myBoard)) {
+				continue;
+			} else{
+				$repeat = FALSE;
+			}
 
 			foreach ($locations as $key => $location) {
 				switch ($direction) {
 					case 1:
 					case 'left':
-						$ships[$type][$key] = "" . chr($row) . $column . "";	
 						$myBoard[chr($row)][$column] = $type;
 						$column--;
 						break;
 					case 2:
 					case 'right':
-						$ships[$type][$key] = "" . chr($row) . $column . "";
 						$myBoard[chr($row)][$column] = $type;
 						$column++;
 						break;
 					case 3:
 					case 'up':
-						$ships[$type][$key] = "" . chr($row) . $column . "";
 						$myBoard[chr($row)][$column] = $type;
 						$row--;
 						break;
 					case 4:
 					case 'down':
-						$ships[$type][$key] = "" . chr($row) . $column . "";
 						$myBoard[chr($row)][$column] = $type;
 						$row++;
 						break;
 				}
 			}
-		}
+		} while($repeat);
+	}
 
 		// computer's
 		
