@@ -1,6 +1,6 @@
 <?php
 
-function smart_implode($glue, $array, $alpha = FALSE) {
+function humanized_list($glue, $array, $alpha = FALSE) {
 	if ($alpha) {
 		sort($array);
 	}
@@ -33,11 +33,11 @@ while ($input === 'YES'){
 
 echo "\n";
 
-$famous_fake_physicists = smart_implode(', ', $physicists_array);
+$famous_fake_physicists = humanized_list(', ', $physicists_array);
 
 echo "Some of the most famous fictional theoretical physicists are {$famous_fake_physicists}.\n";
 
-$famous_fake_physicists = smart_implode(', ', $physicists_array, TRUE);
+$famous_fake_physicists = humanized_list(', ', $physicists_array, TRUE);
 
 echo "Some of the most famous fictional theoretical physicists are {$famous_fake_physicists}.\n";
 
