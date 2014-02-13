@@ -46,10 +46,27 @@ do {
     
     // Check for actionable input
     if ($input == 'N') {
-        // Ask for entry
-        echo 'Enter item: ';
-        // Add entry to list array
-        $items[] = get_input();
+        if (count($items) < 1) {
+            // Ask for entry
+            echo 'Enter item: ';
+            // Add entry to list array
+            array_push($items, get_input());
+            continue;
+        }
+        echo 'Add to (B)eginning or (E)nd of List: ';
+        $input2 = get_input(TRUE);
+        if ($input2 === 'B') {
+            // Ask for entry
+            echo 'Enter item: ';
+            // Add entry to list array
+            array_unshift($items, get_input());
+            $items = array_values($items);
+        } elseif ($input2 === 'E') {
+            // Ask for entry
+            echo 'Enter item: ';
+            // Add entry to list array
+            array_push($items, get_input());
+        }
     } elseif ($input == 'R') {
         echo '(C)omplete, (D)elete, (B)ack : ';
         $input2 = get_input(TRUE);
