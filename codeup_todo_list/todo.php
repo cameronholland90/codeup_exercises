@@ -1,5 +1,9 @@
 <?php
 
+$filename;
+$handle;
+$contents;
+
 // Create array to hold list of todo items
 $items = array();
 $completeItems = array();
@@ -38,7 +42,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit, (C)ompleted List, (S)ort : ';
+    echo '(N)ew item, (R)emove item, (Q)uit, (C)ompleted List, (S)ort, (O)pen : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -123,6 +127,13 @@ do {
         echo 'Removed.' . PHP_EOL;
         // Add entry to list array
         array_pop($items);
+    } elseif ($input === 'O') {
+        echo "What file would you like to open? Please enter the whole filename with path";
+        $filename = get_input();
+        $handle = fopen($filename, "r");
+        $contents = fread($handle, filesize($filename));
+        fclose($handle);
+        $items = explode("\n", $contents);
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
