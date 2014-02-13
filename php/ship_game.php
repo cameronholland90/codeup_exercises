@@ -33,6 +33,16 @@ function markShip($list, $hit) {
 }
 
 // make function to check spaces for another ship
+function willCollide($locations, $board) {
+	foreach ($locations as $coord) {
+		$row = substr($coord, 0, 1);
+		$column = substr($coord, 1);
+		if ($board[$row][$column] !== '.') {
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
 
 // loop for game
 while(TRUE) {
