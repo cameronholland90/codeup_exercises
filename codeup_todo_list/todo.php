@@ -46,27 +46,10 @@ do {
     
     // Check for actionable input
     if ($input == 'N') {
-        if (count($items) < 1) {
-            // Ask for entry
-            echo 'Enter item: ';
-            // Add entry to list array
-            array_push($items, get_input());
-            continue;
-        }
-        echo 'Add to (B)eginning or (E)nd of List: ';
-        $input2 = get_input(TRUE);
-        if ($input2 === 'B') {
-            // Ask for entry
-            echo 'Enter item: ';
-            // Add entry to list array
-            array_unshift($items, get_input());
-            $items = array_values($items);
-        } elseif ($input2 === 'E') {
-            // Ask for entry
-            echo 'Enter item: ';
-            // Add entry to list array
-            array_push($items, get_input());
-        }
+        // Ask for entry
+        echo 'Enter item: ';
+        // Add entry to list array
+        array_push($items, get_input());
     } elseif ($input == 'R') {
         echo '(C)omplete, (D)elete, (B)ack : ';
         $input2 = get_input(TRUE);
@@ -118,6 +101,28 @@ do {
                 $completeItems = array_values($completeItems);
             }
         }
+    } elseif ($input === 'B') {
+        // Ask for entry
+        echo 'Enter item: ';
+        // Add entry to list array
+        array_unshift($items, get_input());
+        $items = array_values($items);
+    } elseif ($input === 'E') {
+        // Ask for entry
+        echo 'Enter item: ';
+        // Add entry to list array
+        array_push($items, get_input());
+    } elseif ($input === 'F') {
+        // Ask for entry
+        echo 'Removed.' . PHP_EOL;
+        // Add entry to list array
+        array_shift($items);
+        $items = array_values($items);
+    } elseif ($input === 'L') {
+        // Ask for entry
+        echo 'Removed.' . PHP_EOL;
+        // Add entry to list array
+        array_pop($items);
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
