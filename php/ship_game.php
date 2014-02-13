@@ -197,21 +197,25 @@ while(TRUE) {
 				switch ($direction) {
 					case 1:
 					case 'left':
+						$ships[$type][$key] = "" . chr($row) . $column . "";
 						$myBoard[chr($row)][$column] = $type;
 						$column--;
 						break;
 					case 2:
 					case 'right':
+						$ships[$type][$key] = "" . chr($row) . $column . "";
 						$myBoard[chr($row)][$column] = $type;
 						$column++;
 						break;
 					case 3:
 					case 'up':
+						$ships[$type][$key] = "" . chr($row) . $column . "";
 						$myBoard[chr($row)][$column] = $type;
 						$row--;
 						break;
 					case 4:
 					case 'down':
+						$ships[$type][$key] = "" . chr($row) . $column . "";
 						$myBoard[chr($row)][$column] = $type;
 						$row++;
 						break;
