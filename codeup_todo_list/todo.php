@@ -11,7 +11,7 @@ $completeItems = array();
 function saveFile($array) {
     $saveList = implode("\n", $array);
     $filename = get_input();
-    echo "(O)verwirte, (A)ppend or (C)reate new ";
+    echo "(O)verwrite, (A)ppend or (C)reate new ";
     $overwrite = get_input(TRUE);
     if ($overwrite === 'O') {
         $handle = fopen($filename, "w");
