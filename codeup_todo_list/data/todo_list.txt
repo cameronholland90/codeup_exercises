@@ -3,4 +3,3 @@ Make the bed
 Buy some milk
 Train a Markov chain
 Teach the dog binary
-check this program

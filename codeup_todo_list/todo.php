@@ -16,17 +16,17 @@ function saveFile($array) {
     if ($overwrite === 'O') {
         $handle = fopen($filename, "w");
         fwrite($handle, $saveList);
-        fclose($handle);
+        
     } elseif ($overwrite === 'A') {
         $handle = fopen($filename, "a");
-        fwrite($handle, $saveList);
-        fclose($handle);
+        fwrite($handle, "\n" . $saveList);
+        
     } elseif ($overwrite === 'C') {
         $handle = fopen($filename, "x");
         fwrite($handle, $saveList);
-        fclose($handle);
+        
     }
-    
+    fclose($handle);
 }
 
 function openFile() {
@@ -160,6 +160,7 @@ do {
         echo "What file would you like to open? Please enter the whole filename with path ";
         $fileText = openFile();
         $items = explode("\n", $fileText);
+        //$items = array_values($items);
     } elseif ($input === 'SA') {
         echo "What file would you like to save to? Please enter the whole filename with path ";
         saveFile($items);
