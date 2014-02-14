@@ -37,13 +37,11 @@ function willCollide($locations, $board) {
 	foreach ($locations as $coord) {
 		$row = substr($coord, 0, 1);
 		$column = substr($coord, 1);
-		echo $row . $column;
 		if ($board[$row][$column] !== '.') {
 			return TRUE;
 			echo $row . $column;
 		}
 	}
-	exit(0);
 	return FALSE;
 }
 
@@ -143,12 +141,12 @@ while(TRUE) {
 			}
 			fwrite(STDOUT, "What direction would you like it to go? 1 = left, 2 = right, 3 = up or 4 = down ");
 			$direction = trim(fgets(STDIN));
-			if (($direction != 1 && $direction != 2) && ($direction != 3 && $direction != 4) && ($direction != 'left' && $direction != 'right') && ($direction != 'up' && $direction != 'down')) {
+			if (($direction !== 1 && $direction !== 2) && ($direction !== 3 && $direction !== 4) && ($direction !== 'left' && $direction !== 'right') && ($direction !== 'up' && $direction !== 'down')) {
 				$direction = mt_rand(1, 4);
 			}
-
+			print_r(count($locations));
 			// checks if ship will go outside of board, opposite direction if it will
-			if (($direction === 'up' || $direction == 3) && ($row < (65 + count($locations)))) {
+			if (($direction === 'up' || $direction == 3) && ($row > (65 + count($locations)))) {
 				$direction = 4;
 			} elseif (($direction === 'down' || $direction == 4) && ($row > (65 + count($locations)))) {
 				$direction = 3;
@@ -186,8 +184,8 @@ while(TRUE) {
 						break;
 				}
 			}
-
-			if (willCollide($locations, $myBoard)) {
+			
+			if (willCollide($ships[$type], $myBoard)) {
 				continue;
 			} else{
 				$repeat = FALSE;
