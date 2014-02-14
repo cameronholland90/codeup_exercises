@@ -8,6 +8,35 @@ $contents;
 $items = array();
 $completeItems = array();
 
+function saveFile($array) {
+    $saveList = implode("\n", $array);
+    $filename = get_input();
+    echo "(O)verwirte, (A)ppend or (C)reate new ";
+    $overwrite = get_input(TRUE);
+    if ($overwrite === 'O') {
+        $handle = fopen($filename, "w");
+        fwrite($handle, $saveList);
+        fclose($handle);
+    } elseif ($overwrite === 'A') {
+        $handle = fopen($filename, "a");
+        fwrite($handle, $saveList);
+        fclose($handle);
+    } elseif ($overwrite === 'C') {
+        $handle = fopen($filename, "x");
+        fwrite($handle, $saveList);
+        fclose($handle);
+    }
+    
+}
+
+function openFile() {
+    $filename = get_input();
+    $handle = fopen($filename, "r");
+    $contents = fread($handle, filesize($filename));
+    fclose($handle);
+    return $contents;
+}
+
 // List array items formatted for CLI
 function list_items($list)
 {
@@ -42,7 +71,7 @@ do {
     echo list_items($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit, (C)ompleted List, (S)ort, (O)pen : ';
+    echo '(O)pen, (SA)ve, (N)ew item, (R)emove item, (Q)uit, (C)ompleted List, (S)ort: ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -129,11 +158,11 @@ do {
         array_pop($items);
     } elseif ($input === 'O') {
         echo "What file would you like to open? Please enter the whole filename with path ";
-        $filename = get_input();
-        $handle = fopen($filename, "r");
-        $contents = fread($handle, filesize($filename));
-        fclose($handle);
-        $items = explode("\n", $contents);
+        $fileText = openFile();
+        $items = explode("\n", $fileText);
+    } elseif ($input === 'SA') {
+        echo "What file would you like to save to? Please enter the whole filename with path ";
+        saveFile($items);
     }
 // Exit when input is (Q)uit
 } while ($input != 'Q');
