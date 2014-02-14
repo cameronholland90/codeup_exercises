@@ -34,9 +34,9 @@ do {
 
 	echo "Would you like to convert another? (Y)es or (N)o ";
 	$continue = get_input(TRUE);
-	if ($currency === 'Y') {
+	if ($continue === 'Y') {
 		$continue = TRUE;
-	} elseif ($currency === 'N') {
+	} elseif ($continue === 'N') {
 		$continue = FALSE;
 	}
 
