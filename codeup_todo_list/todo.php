@@ -128,7 +128,7 @@ do {
         // Add entry to list array
         array_pop($items);
     } elseif ($input === 'O') {
-        echo "What file would you like to open? Please enter the whole filename with path";
+        echo "What file would you like to open? Please enter the whole filename with path ";
         $filename = get_input();
         $handle = fopen($filename, "r");
         $contents = fread($handle, filesize($filename));
