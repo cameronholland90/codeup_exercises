@@ -91,7 +91,7 @@ function drawCard(&$hand, &$deck) {
 // Dealer: [4 C] [???] Total: ???
 // or:
 // Player: [J D] [2 D] Total: 12
-function echoHand($hand, $name, $hidden = false) {
+function echoHand($hand, $name, $hidden = FALSE) {
   	echo $name . ": ";
   	foreach ($hand as $key => $card) {
   		if ($key > 0 && $hidden) {
@@ -100,7 +100,11 @@ function echoHand($hand, $name, $hidden = false) {
   			echo "[{$card}] ";
   		}
   	}
-  	echo "\n";
+    if ($hidden) {
+      echo " Total: ???\n";
+    } else {
+      echo " Total: " .  getHandTotal($hand) . "\n";
+    }
 }
 
 // build the deck of cards
