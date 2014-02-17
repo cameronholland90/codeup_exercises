@@ -18,12 +18,11 @@ function openFile() {
 }
 
 function getWordPointer() {
-	$dieOne = mt_rand(1, 6);
-	$dieTwo = mt_rand(1, 6);
-	$dieThree = mt_rand(1, 6);
-	$dieFour = mt_rand(1, 6);
-	$dieFive = mt_rand(1, 6);
-	$wordPointer = $dieOne . $dieTwo . $dieThree . $dieFour . $dieFive;
+	$wordPointer = '';
+	for ($i = 0; $i < 5; $i++) { 
+		$die = mt_rand(1, 6);
+		$wordPointer .= $die;
+	}
 	return $wordPointer;
 }
 
@@ -32,7 +31,7 @@ $tempWordList = explode("\n", $tempWordList);
 $wordList = array();
 
 foreach ($tempWordList as $word) {
-	$temp = explode(' ', $word);
+	$temp = explode("\t", $word);
 	$key = $temp[0];
 	$wordList[$key] = $temp[1];
 }
@@ -46,7 +45,7 @@ $numWords = get_input();
 
 for ($i = 0; $i < $numWords; $i++) { 
 	$wordPointer = getWordPointer();
-	$password .= $wordlist[$wordPointer];
+	$password .= $wordList[$wordPointer];
 }
 
 echo "Your password is $password\n";
