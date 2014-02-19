@@ -146,7 +146,7 @@ while(TRUE) {
 			}
 			print_r(count($locations));
 			// checks if ship will go outside of board, opposite direction if it will
-			if (($direction === 'up' || $direction == 3) && ($row > (65 + count($locations)))) {
+			if (($direction === 'up' || $direction == 3) && ($row < (65 + count($locations)))) {
 				$direction = 4;
 			} elseif (($direction === 'down' || $direction == 4) && ($row > (65 + count($locations)))) {
 				$direction = 3;
