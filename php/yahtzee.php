@@ -12,12 +12,14 @@ function get_input($upper = FALSE)
     // Return filtered STDIN input
 }
 
+// preforms the initial dice roll
 function firstDiceRoll(&$dice) {
 	foreach ($dice as $die => $value) {
 		$dice[$die] = mt_rand(1, 6);
 	}
 }
 
+// shows the players dice
 function displayDice($dice) {
 	$tempString = '';
 	foreach ($dice as $value) {
@@ -26,6 +28,7 @@ function displayDice($dice) {
 	echo "Dice: " . $tempString . "\n";
 }
 
+// preforms reroll for dice selected by user
 function rerollDice(&$dice, &$diceToReroll) {
 	for ($i = 0; $i < count($diceToReroll); $i++) { 
 		$temp = $diceToReroll[$i] - 1;
@@ -34,7 +37,8 @@ function rerollDice(&$dice, &$diceToReroll) {
 	$diceToReroll = array();
 }
 
-function typeOfHand($dice, &$score) {
+// checks the dice to see what score category they fit in
+function typeOfHand($dice, &$userOptions, &$scores) {
 	$one = 0;
 	$two = 0;
 	$three = 0;
@@ -42,6 +46,8 @@ function typeOfHand($dice, &$score) {
 	$five = 0;
 	$six = 0;
 	$tempScore = 0;
+
+	// counts how many dice are at each value
 	foreach ($dice as $key => $value) {
 		if ($value === 1) {
 			$one++;
@@ -58,39 +64,65 @@ function typeOfHand($dice, &$score) {
 		}
 		$tempScore += $value;
 	}
+
+	// based on how many of each value you have, $userOptions gets each category your dice qualify for
 	if ($one === 5 || $two === 5 || $three === 5 || $four === 5 || $five === 5 || $six === 5) {
-		$score = 50;
-		return "Yahtzee!";
-	} elseif ($one === 4 || $two === 4 || $three === 4 || $four === 4 || $five === 4 || $six === 4) {
-		$score = $tempScore;
-		return "Four of a Kind!";
-	} elseif (($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) && 
+		$userOptions[] = "Yahtzee";
+		$scores[] = 50;
+	} 
+	if ($one === 4 || $two === 4 || $three === 4 || $four === 4 || $five === 4 || $six === 4) {
+		$userOptions[] = "Four of a Kind";
+		$scores[] = $tempScore;
+	} 
+	if (($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) && 
 				($one === 2 || $two === 2 || $three === 2 || $four === 2 || $five === 2 || $six === 2)) {
-		$score = 25;
-		return "Full House!";
-	} elseif ($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) {
-		$score = $tempScore;
-		return "Three of a Kind!";
-	} elseif (($one === 1 && $two === 1 && $three === 1 && $four === 1 && $five === 1) || 
+		$userOptions[] = "Full House";
+		$scores[] = 25;
+	} 
+	if ($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) {
+		$userOptions[] = "Three of a Kind";
+		$scores[] = $tempScore;
+	} 
+	if (($one === 1 && $two === 1 && $three === 1 && $four === 1 && $five === 1) || 
 				($two === 1 && $three === 1 && $four === 1 && $five === 1 && $six === 1)){
-		$score = 40;
-		return "Large Straight!";
-	} elseif (($one === 1 && $two === 1 && $three === 1 && $four === 1) || 
-				($two === 1 && $three === 1 && $four === 1 && $five === 1) || 
-				($three === 1 && $four === 1 && $five === 1 && $six === 1)){
-		$score = 30;
-		return "Small Straight!";
-	} else {
-		$score = $tempScore;
-		return "Chance!";
-	}
+		$userOptions[] = "Large Straight";
+		$scores[] = 40;
+	} 
+	if (($one >= 1 && $two >= 1 && $three >= 1 && $four >= 1) || 
+				($two >= 1 && $three >= 1 && $four >= 1 && $five >= 1) || 
+				($three >= 1 && $four >= 1 && $five >= 1 && $six >= 1)){
+		$userOptions[] = "Small Straight";
+		$scores[] = 30;
+	} 
+	$userOptions[] = "Chance";
+	$scores[] = $tempScore;
 }
 
-// array that holds face values of dice
-$dice = array(0, 0, 0, 0, 0);
-$diceToReroll = array();
-$rollcount = 1;
-$score = 0;
+function listOptions($userOptions, $scores) {
+    $output = "";
+    // Iterate through list items
+    foreach ($userOptions as $key => $option) {
+        // Display each item and a newline
+        $key2 = $key + 1;
+        $output .= "[{$key2}] {$option} for " . $scores[$key] . "\n";
+    }
+
+    return $output;
+}
+
+function pickOption(&$userOptions, &$scores) {
+	echo "Which way would you like to score your dice? ";
+	$input = (get_input() - 1);
+	$userOptions = $userOptions[$input];
+	$scores = $scores[$input];
+}
+
+
+$dice = array(0, 0, 0, 0, 0);	// array that holds face values of dice
+$diceToReroll = array();		// array that will hold index of dice to reroll each turn
+$rollcount = 1;					// keeps track of how many times the user has rolled(3 is maximum including initial roll)
+$score = 0;						// keeps track of score
+$userOptions = array();			// holds score options for user at end of turn
 
 firstDiceRoll($dice);
 displayDice($dice);
@@ -104,28 +136,32 @@ while($answer === 'Y' && $rollcount < 3) {
 	displayDice($dice);
 
 	// asks which ones to reroll
-	echo "How many would you like to reroll? ";
-	$number = get_input();
-	for ($i = 0; $i < $number; $i++) {
-		echo "Which die would you like to reroll? "; 
-		$diceToReroll[$i] = get_input();
-	}
+	echo "Which dice would you like to reroll ex: 1, 3, 4? ";
+	$diceReroll = get_input();
+	$diceReroll = explode(', ', $diceReroll);
 
-	rerollDice($dice, $diceToReroll);
+	rerollDice($dice, $diceReroll);
 	displayDice($dice);
 
-	echo "Would you like to reroll again? ";
-	$answer = get_input(TRUE);
-
-	if ($rollcount === 3 && $answer === 'Y') {
-		echo "You can not reroll again!\n";
+	if ($rollcount < 3) {			// checks to see how many times the user has rolled their dice
+		// asks if you would like to reroll again
+		echo "Would you like to reroll again? ";
+		$answer = get_input(TRUE);	
+	} else {
+		// tells the user they have rolled 3 times and ends the game loop
+		echo "You have rolled 3 times. Your turn is done!\n";
+		$answer = "done";
 	}
 }
 
-asort($dice);
-displayDice($dice);
-$type = typeOfHand($dice, $score);
+asort($dice);										// sorts the dice into value order after the users turn
+displayDice($dice);									// displays sorted dice
+typeOfHand($dice, $userOptions, $scores);			// checks to see what score options the user has
 
-echo "You had a {$type} with a score of {$score}!\n";
+echo listOptions($userOptions, $scores);			// lists options for user to score
+
+pickOption($userOptions, $scores);
+
+echo "You had a {$userOptions} with a score of {$scores}!\n";
 
 ?>
