@@ -1,5 +1,17 @@
 <?php
 
+function get_input($upper = FALSE) 
+{
+    $userInput = trim(fgets(STDIN));
+    if ($upper === TRUE) {
+        return strtoupper($userInput);
+    } else {
+        return $userInput;
+    }
+
+    // Return filtered STDIN input
+}
+
 function alphabetSoup($string) {
 	$string = explode(' ', $string);
 	$temp;
@@ -21,7 +33,8 @@ function alphabetSoup($string) {
 	return $string;
 }
 
-$string = "hello World";
+echo "Please enter a word or words. ";
+$string = get_input();
 echo $string . "\n";
 $string = alphabetSoup($string);
 echo $string . "\n";
