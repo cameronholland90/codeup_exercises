@@ -52,7 +52,7 @@ function getCardValue($card, $over21 = FALSE) {
   		return 1;
   	} elseif (substr($card, 0, 1) === 'A') {
   		return 11;
-  	} elseif (substr($card, 0, 1) === 'K' || substr($card, 0, 1) === 'Q' || substr($card, 0, 1) === 'J') {
+  	} elseif (substr($card, 0, 1) === 'K' || substr($card, 0, 1) === 'Q' || substr($card, 0, 1) === 'J' || substr($card, 0, 2) === 'J') {
   		return 10;
   	} else {
   		return (int)substr($card, 0, 1);
@@ -105,6 +105,25 @@ function echoHand($hand, $name, $hidden = FALSE) {
     } else {
       echo " Total: " .  getHandTotal($hand) . "\n";
     }
+}
+
+function checkForSplit($hand) {
+  if (count($hand) === 2 && (substr($hand[0], 0, 1) === substr($hand[1], 0, 1))) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+function checkForDouble($hand) {
+  if (count($hand) === 2) {
+    return TRUE;
+  }
+}
+
+function splitHand(&$hand, &$splitHand) {
+  $splitHand[0] = unset($hand[1]);
+  $hand = array_values($hand);
 }
 
 // build the deck of cards

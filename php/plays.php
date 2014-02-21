@@ -22,11 +22,12 @@ function get_input($upper = FALSE)
 
 function findMyLines($play, $name) {
 	// echo $name;
-	$name .= '.';
+	$nameWithPeriod = $name . '.';
+	$nameWithSpace = $name . ' ';
 	// echo $name;
 	$myLines = '';
 	foreach ($play as $key => $value) {
-		if (substr($value, 0, strlen($name)) === $name) {
+		if ((substr($value, 0, strlen($name) + 1) === $nameWithPeriod) || (substr($value, 0, strlen($name) + 1) === $nameWithSpace)) {
 			$myLines .= $value . "\n\n";
 		}
 	}
