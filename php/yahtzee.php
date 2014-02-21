@@ -8,8 +8,6 @@ function get_input($upper = FALSE)
     } else {
         return $userInput;
     }
-
-    // Return filtered STDIN input
 }
 
 // preforms first roll and reroll for dice selected by user
@@ -66,45 +64,15 @@ function typeOfHand($dice,  &$scores) {
 		$userOptions[] = "Large Straight";
 		$scores[] = 40;
 	}
-	if ((array_search(0, $valueCount) === 4 && array_search(0, $valueCount) === 5) || 
-		(array_search(0, $valueCount) === 0 && array_search(0, $valueCount) === 5) || 
-		(array_search(0, $valueCount) === 0 && array_search(0, $valueCount) === 1)) {
+	if ((($valueCount[0] >= 1 && $valueCount[1] >= 1 && $valueCount[2] >= 1 && $valueCount[3] >= 1) || 
+			($valueCount[1] >= 1 && $valueCount[2] >= 1 && $valueCount[3] >= 1 && $valueCount[4] >= 1) || 
+			($valueCount[2] >= 1 && $valueCount[3] >= 1 && $valueCount[4] >= 1 && $valueCount[5] >= 1))) {
 		$userOptions[] = "Small Straight";
 		$scores[] = 30;
 	}
 	$userOptions[] = "Chance";
 	$scores[] = $tempScore;
 
-	// if ($one === 5 || $two === 5 || $three === 5 || $four === 5 || $five === 5 || $six === 5) {
-	// 	$userOptions[] = "Yahtzee";
-	// 	$scores[] = 50;
-	// } 
-	// if ($one === 4 || $two === 4 || $three === 4 || $four === 4 || $five === 4 || $six === 4) {
-	// 	$userOptions[] = "Four of a Kind";
-	// 	$scores[] = $tempScore;
-	// } 
-	// if (($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) && 
-	// 			($one === 2 || $two === 2 || $three === 2 || $four === 2 || $five === 2 || $six === 2)) {
-	// 	$userOptions[] = "Full House";
-	// 	$scores[] = 25;
-	// } 
-	// if ($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) {
-	// 	$userOptions[] = "Three of a Kind";
-	// 	$scores[] = $tempScore;
-	// } 
-	// if (($one === 1 && $two === 1 && $three === 1 && $four === 1 && $five === 1) || 
-	// 			($two === 1 && $three === 1 && $four === 1 && $five === 1 && $six === 1)){
-	// 	$userOptions[] = "Large Straight";
-	// 	$scores[] = 40;
-	// } 
-	// if (($one >= 1 && $two >= 1 && $three >= 1 && $four >= 1) || 
-	// 			($two >= 1 && $three >= 1 && $four >= 1 && $five >= 1) || 
-	// 			($three >= 1 && $four >= 1 && $five >= 1 && $six >= 1)){
-	// 	$userOptions[] = "Small Straight";
-	// 	$scores[] = 30;
-	// } 
-
-	
 	return $userOptions;
 }
 
