@@ -45,7 +45,7 @@ function typeOfHand($dice, &$scores, $remainingOptions) {
 	$tempScore = array_sum($dice);
 
 	// based on how many of each value you have, $userOptions gets each category your dice qualify for
-	if (in_array(5, $valueCount) && in_array("Yahtzee", $remainingOptions)) {
+	if (in_array(5, $valueCount) ) {
 		$userOptions[] = "Yahtzee";
 		$scores[] = 50;
 	} 
@@ -66,9 +66,10 @@ function typeOfHand($dice, &$scores, $remainingOptions) {
 		$userOptions[] = "Large Straight";
 		$scores[] = 40;
 	}
-	if (((array_search(0, $valueCount) === 4 && array_search(0, $valueCount) === 5) || 
-			(array_search(0, $valueCount) === 0 && array_search(0, $valueCount) === 5) || 
-			(array_search(0, $valueCount) === 0 && array_search(0, $valueCount) === 1)) 
+
+	if ((($valueCount[0] >= 1 && $valueCount[1] >= 1 && $valueCount[2] >= 1 && $valueCount[3] >= 1) || 
+			($valueCount[1] >= 1 && $valueCount[2] >= 1 && $valueCount[3] >= 1 && $valueCount[4] >= 1) || 
+			($valueCount[2] >= 1 && $valueCount[3] >= 1 && $valueCount[4] >= 1 && $valueCount[5] >= 1))
 			&& in_array("Small Straight", $remainingOptions)) {
 		$userOptions[] = "Small Straight";
 		$scores[] = 30;
@@ -127,7 +128,11 @@ while($continue) {
 		// asks which ones to reroll
 		echo "Which dice would you like to reroll ex: 1, 3, 4? ";
 		$diceReroll = get_input();
-		$diceReroll = explode(', ', $diceReroll);
+		$diceReroll = explode(',', $diceReroll);
+
+		foreach ($diceReroll as $key => $value) {
+			$diceReroll[$key] = trim($value);
+		}
 
 		rollDice($dice, $diceReroll);
 		displayDice($dice);
@@ -159,7 +164,7 @@ while($continue) {
 
 	pickOption($userOptions, $scores);										// allows user to pick how to score their turn
 
-	$choice = array_search($userOptions, $remainingOptions);									// finds where the user's choice is in the $remainingOptions array
+	$choice = array_search($userOptions, $remainingOptions);				// finds where the user's choice is in the $remainingOptions array
 	unset($remainingOptions[$choice]);										// removes the users choice from the available choices
 	$remainingOptions = array_values($remainingOptions);
 	$score += $scores;														// adds the users score from the turn to their total score
@@ -171,6 +176,6 @@ while($continue) {
 	}
 }
 
-echo "Your final score was {$score}!";
+echo "Your final score was {$score}!\n";
 
 ?>
