@@ -12,11 +12,13 @@ function get_input($upper = FALSE)
     // Return filtered STDIN input
 }
 
-// preforms the initial dice roll
-function firstDiceRoll(&$dice) {
-	foreach ($dice as $die => $value) {
-		$dice[$die] = mt_rand(1, 6);
+// preforms first roll and reroll for dice selected by user
+function rollDice(&$dice, &$diceToReroll) {
+	for ($i = 0; $i < count($diceToReroll); $i++) { 
+		$temp = $diceToReroll[$i] - 1;
+		$dice[$temp] = mt_rand(1, 6);
 	}
+	$diceToReroll = array();
 }
 
 // shows the players dice
@@ -28,74 +30,82 @@ function displayDice($dice) {
 	echo "Dice: " . $tempString . "\n";
 }
 
-// preforms reroll for dice selected by user
-function rerollDice(&$dice, &$diceToReroll) {
-	for ($i = 0; $i < count($diceToReroll); $i++) { 
-		$temp = $diceToReroll[$i] - 1;
-		$dice[$temp] = mt_rand(1, 6);
-	}
-	$diceToReroll = array();
-}
-
 // checks the dice to see what score category they fit in
-function typeOfHand($dice, &$userOptions, &$scores) {
-	$one = 0;
-	$two = 0;
-	$three = 0;
-	$four = 0;
-	$five = 0;
-	$six = 0;
+function typeOfHand($dice,  &$scores) {
+	$userOptions = array();
+	$valueCount = array(0, 0, 0, 0, 0, 0);
 	$tempScore = 0;
 
 	// counts how many dice are at each value
-	foreach ($dice as $key => $value) {
-		if ($value === 1) {
-			$one++;
-		} elseif ($value === 2) {
-			$two++;
-		} elseif ($value === 3) {
-			$three++;
-		} elseif ($value === 4) {
-			$four++;
-		} elseif ($value === 5) {
-			$five++;
-		} elseif ($value === 6) {
-			$six++;
-		}
-		$tempScore += $value;
-	}
+	$valueCount[0] = count(array_keys($dice, 1));
+	$valueCount[1] = count(array_keys($dice, 2));
+	$valueCount[2] = count(array_keys($dice, 3));
+	$valueCount[3] = count(array_keys($dice, 4));
+	$valueCount[4] = count(array_keys($dice, 5));
+	$valueCount[5] = count(array_keys($dice, 6));
+	$tempScore = array_sum($dice);
 
 	// based on how many of each value you have, $userOptions gets each category your dice qualify for
-	if ($one === 5 || $two === 5 || $three === 5 || $four === 5 || $five === 5 || $six === 5) {
+	if (in_array(5, $valueCount)) {
 		$userOptions[] = "Yahtzee";
 		$scores[] = 50;
 	} 
-	if ($one === 4 || $two === 4 || $three === 4 || $four === 4 || $five === 4 || $six === 4) {
+	if (in_array(4, $valueCount)) {
 		$userOptions[] = "Four of a Kind";
 		$scores[] = $tempScore;
 	} 
-	if (($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) && 
-				($one === 2 || $two === 2 || $three === 2 || $four === 2 || $five === 2 || $six === 2)) {
+	if (in_array(3, $valueCount) && in_array(2, $valueCount)) {
 		$userOptions[] = "Full House";
 		$scores[] = 25;
 	} 
-	if ($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) {
+	if (in_array(3, $valueCount)) {
 		$userOptions[] = "Three of a Kind";
 		$scores[] = $tempScore;
 	} 
-	if (($one === 1 && $two === 1 && $three === 1 && $four === 1 && $five === 1) || 
-				($two === 1 && $three === 1 && $four === 1 && $five === 1 && $six === 1)){
+	if ((array_search(0, $valueCount) === 0 || array_search(0, $valueCount) === 5) && (count(array_keys($valueCount, 0)) === 1)) {
 		$userOptions[] = "Large Straight";
 		$scores[] = 40;
-	} 
-	if (($one >= 1 && $two >= 1 && $three >= 1 && $four >= 1) || 
-				($two >= 1 && $three >= 1 && $four >= 1 && $five >= 1) || 
-				($three >= 1 && $four >= 1 && $five >= 1 && $six >= 1)){
+	}
+	if ((array_search(0, $valueCount) === 4 && array_search(0, $valueCount) === 5) || 
+		(array_search(0, $valueCount) === 0 && array_search(0, $valueCount) === 5) || 
+		(array_search(0, $valueCount) === 0 && array_search(0, $valueCount) === 1)) {
 		$userOptions[] = "Small Straight";
 		$scores[] = 30;
-	} 
+	}
 	$userOptions[] = "Chance";
 	$scores[] = $tempScore;
+
+	// if ($one === 5 || $two === 5 || $three === 5 || $four === 5 || $five === 5 || $six === 5) {
+	// 	$userOptions[] = "Yahtzee";
+	// 	$scores[] = 50;
+	// } 
+	// if ($one === 4 || $two === 4 || $three === 4 || $four === 4 || $five === 4 || $six === 4) {
+	// 	$userOptions[] = "Four of a Kind";
+	// 	$scores[] = $tempScore;
+	// } 
+	// if (($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) && 
+	// 			($one === 2 || $two === 2 || $three === 2 || $four === 2 || $five === 2 || $six === 2)) {
+	// 	$userOptions[] = "Full House";
+	// 	$scores[] = 25;
+	// } 
+	// if ($one === 3 || $two === 3 || $three === 3 || $four === 3 || $five === 3 || $six === 3) {
+	// 	$userOptions[] = "Three of a Kind";
+	// 	$scores[] = $tempScore;
+	// } 
+	// if (($one === 1 && $two === 1 && $three === 1 && $four === 1 && $five === 1) || 
+	// 			($two === 1 && $three === 1 && $four === 1 && $five === 1 && $six === 1)){
+	// 	$userOptions[] = "Large Straight";
+	// 	$scores[] = 40;
+	// } 
+	// if (($one >= 1 && $two >= 1 && $three >= 1 && $four >= 1) || 
+	// 			($two >= 1 && $three >= 1 && $four >= 1 && $five >= 1) || 
+	// 			($three >= 1 && $four >= 1 && $five >= 1 && $six >= 1)){
+	// 	$userOptions[] = "Small Straight";
+	// 	$scores[] = 30;
+	// } 
+
+	
+	return $userOptions;
 }
 
 function listOptions($userOptions, $scores) {
@@ -119,12 +129,12 @@ function pickOption(&$userOptions, &$scores) {
 
 
 $dice = array(0, 0, 0, 0, 0);	// array that holds face values of dice
-$diceToReroll = array();		// array that will hold index of dice to reroll each turn
+$diceToReroll = array(1,2,3,4,5);		// array that will hold index of dice to reroll each turn
 $rollcount = 1;					// keeps track of how many times the user has rolled(3 is maximum including initial roll)
 $score = 0;						// keeps track of score
 $userOptions = array();			// holds score options for user at end of turn
 
-firstDiceRoll($dice);
+rollDice($dice, $diceToReroll);
 displayDice($dice);
 
 // asks user if they would like to reroll some of their dice
@@ -140,7 +150,7 @@ while($answer === 'Y' && $rollcount < 3) {
 	$diceReroll = get_input();
 	$diceReroll = explode(', ', $diceReroll);
 
-	rerollDice($dice, $diceReroll);
+	rollDice($dice, $diceReroll);
 	displayDice($dice);
 
 	if ($rollcount < 3) {			// checks to see how many times the user has rolled their dice
@@ -156,7 +166,7 @@ while($answer === 'Y' && $rollcount < 3) {
 
 asort($dice);										// sorts the dice into value order after the users turn
 displayDice($dice);									// displays sorted dice
-typeOfHand($dice, $userOptions, $scores);			// checks to see what score options the user has
+$userOptions = typeOfHand($dice, $scores);			// checks to see what score options the user has
 
 echo listOptions($userOptions, $scores);			// lists options for user to score
 
