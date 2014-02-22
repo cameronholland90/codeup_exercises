@@ -52,7 +52,7 @@ function getCardValue($card, $over21 = FALSE) {
   		return 1;
   	} elseif (substr($card, 0, 1) === 'A') {
   		return 11;
-  	} elseif (substr($card, 0, 1) === 'K' || substr($card, 0, 1) === 'Q' || substr($card, 0, 1) === 'J' || substr($card, 0, 2) === 'J') {
+  	} elseif (substr($card, 0, 1) === 'K' || substr($card, 0, 1) === 'Q' || substr($card, 0, 1) === 'J' || substr($card, 0, 2) === '10') {
   		return 10;
   	} else {
   		return (int)substr($card, 0, 1);
