@@ -95,8 +95,11 @@ function listOptions($userOptions, $scores) {
 }
 
 function pickOption(&$userOptions, &$scores) {
-	echo "Which way would you like to score your dice? ";
-	$input = (get_input() - 1);
+	do{
+		echo "Which way would you like to score your dice? ";
+		$input = get_input();
+	} while(!is_numeric($input));
+	$input -= 1;
 	$userOptions = $userOptions[$input];
 	$scores = $scores[$input];
 }
